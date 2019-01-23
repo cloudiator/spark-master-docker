@@ -2,7 +2,7 @@
 
 Based on the latest release of [Apache Spark](http://spark.apache.org/)
 
-Current release: Spark 2.3.1 with Hadoop 2.7
+Current release: Spark 2.3.2 with Hadoop 2.7
 
 ------
 
@@ -17,6 +17,8 @@ Required environment variables:
 - JMS_IP => JMS IP for the Metric Agent
 
 - JMS_PORT => JMS PORT for the Metric Agent
+
+- APP_NAME => name of the application to monitor
 
 ------
 
