@@ -37,7 +37,7 @@ function writeConfigOptions(){
     export JMS_PORT=$JMS_PORT
     export APP_NAME=$APP_NAME
 
-    export SPARK_VERSION=2.3.2 
+    export SPARK_VERSION=2.3.1 
 
     export LOCAL_ADDRESS=$(ip route get 8.8.8.8 | awk '{print $NF; exit}')
     export PUBLIC_ADDRESS=$(dig +short myip.opendns.com @resolver1.opendns.com)
