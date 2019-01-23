@@ -20,12 +20,16 @@ ADD init /opt/docker-init
 RUN chmod +x  /opt/docker-init/entrypoint
 ADD conf /opt/docker-conf
 
-# data folders
 
 
 # apache spark
 RUN wget http://mirror.dkd.de/apache/spark/spark-2.3.1/spark-2.3.1-bin-hadoop2.7.tgz -O /tmp/spark-2.3.1-bin-hadoop2.7.tgz
 RUN  tar -xvzf /tmp/spark-2.3.1-bin-hadoop2.7.tgz -C /opt/
+
+# metric agent
+RUN mkdir /opt/metric-agent
+RUN wget https://nexus.7bulls.eu:8443/repository/maven-snapshots/eu/melodic/metric-generator/0.0.1-SNAPSHOT/metric-generator-0.0.1-20180720.115709-68-jar-with-dependencies.jar -O /opt/metric-agent/metric-agent.jar
+RUN mv /opt/docker-conf/metric.generator.properties /opt/metric-agent/metric.generator.properties
 
  
 # expose ports
