@@ -33,17 +33,19 @@ function writeConfigOptions(){
     echo "write config options"
     export SPARK_MASTER_PORT=$SPARK_MASTER_PORT
     export SPARK_MASTER_UI_PORT = $SPARK_MASTER_UI_PORT
-    export JMS_IP = $JMS_IP
-    export JMS_PORT = $JMS_PORT
+    export JMS_IP=$JMS_IP
+    export JMS_PORT=$JMS_PORT
+
+    export SPARK_VERSION=2.3.2 
 
     export LOCAL_ADDRESS=$(ip route get 8.8.8.8 | awk '{print $NF; exit}')
     export PUBLIC_ADDRESS=$(dig +short myip.opendns.com @resolver1.opendns.com)
         
     #cat /opt/docker-conf/livy.conf | envsubst > /opt/spark-2.3.1-bin-hadoop2.7/livy.conf
     #TODO use envsubst if env vars are passed to the entrypoint
-    cp /opt/docker-conf/log4j.properties /opt/spark-2.3.1-bin-hadoop2.7/conf/log4j.properties
-    cp /opt/docker-conf/spark-defaults.conf /opt/spark-2.3.1-bin-hadoop2.7/conf/spark-defaults.conf
-    cp /opt/docker-conf/spark-env.sh /opt/spark-2.3.1-bin-hadoop2.7/conf/spark-env.sh
+    cp /opt/docker-conf/log4j.properties /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/log4j.properties
+    cp /opt/docker-conf/spark-defaults.conf /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-defaults.conf
+    cp /opt/docker-conf/spark-env.sh /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
 }
 
 function init(){
@@ -70,13 +72,13 @@ function spark_master_service(){
 
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     
-    echo "SPARK_PUBLIC_DNS=$PUBLIC_ADDRESS"  >> /opt/spark-2.3.1-bin-hadoop2.7/conf/spark-env.sh
-    echo "SPARK_LOCAL_IP=$LOCAL_ADDRESS"  >> /opt/spark-2.3.1-bin-hadoop2.7/conf/spark-env.sh
-    echo "SPARK_MASTER_HOST=$LOCAL_ADDRESS"  >> /opt/spark-2.3.1-bin-hadoop2.7/conf/spark-env.sh
-    echo "SPARK_MASTER_PORT=$SPARK_MASTER_PORT"  >> /opt/spark-2.3.1-bin-hadoop2.7/conf/spark-env.sh
+    echo "SPARK_PUBLIC_DNS=$PUBLIC_ADDRESS"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
+    echo "SPARK_LOCAL_IP=$LOCAL_ADDRESS"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
+    echo "SPARK_MASTER_HOST=$LOCAL_ADDRESS"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
+    echo "SPARK_MASTER_PORT=$SPARK_MASTER_PORT"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
 
     echo "starting Apache Spark Master!"
-    /opt/spark-2.3.1-bin-hadoop2.7/sbin/start-master.sh --webui-port ${SPARK_MASTER_UI_PORT}
+    /opt/spark-$SPARK_VERSION-bin-hadoop2.7/sbin/start-master.sh --webui-port ${SPARK_MASTER_UI_PORT}
 
     # whatever blocking call 
     tail -f /dev/null
