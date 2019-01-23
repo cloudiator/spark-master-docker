@@ -14,11 +14,15 @@ Required environment variables:
 
 - SPARK_MASTER_UI_PORT => Spark Web Interface
 
+- JMS_IP => JMS IP for the Metric Agent
+
+- JMS_PORT => JMS PORT for the Metric Agent
+
 ------
 
 ### Usage:
 
 ```dockerfile
-docker run -d -p 7077:7077 -p 8080:8080 -e SPARK_MASTER_PORT=7077  -e SPARK_MASTER_UI_PORT=8080  cloudiator/spark-master:latest
+docker run -d -p 7077:7077 -p 8080:8080 -e SPARK_MASTER_PORT=7077  -e SPARK_MASTER_UI_PORT=8080 -e JMS_IP=localhost JMS_PORT=61616   cloudiator/spark-master:latest
 ```
 
