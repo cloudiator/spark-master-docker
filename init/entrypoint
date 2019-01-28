@@ -13,7 +13,7 @@ GLOBAL_VAR="xyz"
 # validate if all container variables are set
 ##############################################################################
 function validate(){
-    vars="SPARK_MASTER_PORT SPARK_MASTER_UI_PORT JMS_IP JMS_PORT APP_NAME PRIVATE_IP PUBLIC_IP METRIC_PATTERN"
+    vars="SPARK_MASTER_PORT SPARK_MASTER_UI_PORT JMS_IP JMS_PORT APP_NAME PRIVATE_IP PUBLIC_IP METRIC_PATTERN METRIC_REPORTING_INTERVAL"
     for var in $vars; do
         if [[ $(env | awk -F "=" '{print $1}' | grep "^$var$") != "$var" ]]; then
             echo "$var not set but required."
@@ -39,6 +39,7 @@ function writeConfigOptions(){
     export LOCAL_ADDRESS=$PRIVATE_IP
     export PUBLIC_ADDRESS=$PUBLIC_IP
     export METRIC_PATTERN=$METRIC_PATTERN
+    export METRIC_REPORTING_INTERVAL=$METRIC_REPORTING_INTERVAL
 
 
     export SPARK_VERSION=2.3.1 
@@ -104,6 +105,7 @@ function metric_agent_service(){
     echo "jms.sever.port=$JMS_PORT" >> /opt/metric-agent/metric.generator.properties
     echo "collector.url.application.name=$APP_NAME" >> /opt/metric-agent/metric.generator.properties
     echo "metric.pattern=$METRIC_PATTERN" >> /opt/metric-agent/metric.generator.properties
+    echo "collector.checking.time=$METRIC_REPORTING_INTERVAL" >> /opt/metric-agent/metric.generator.properties 
 
     java -jar /opt/metric-agent/metric-agent.jar -p /opt/metric-agent/metric.generator.properties
 
