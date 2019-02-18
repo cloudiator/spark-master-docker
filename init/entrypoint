@@ -78,17 +78,24 @@ function spark_master_service(){
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     
     echo "SPARK_PUBLIC_DNS=$PUBLIC_ADDRESS"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
-    echo "SPARK_LOCAL_IP=$LOCAL_ADDRESS"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
+    #echo "SPARK_LOCAL_IP=$LOCAL_ADDRESS"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
+    echo "SPARK_LOCAL_IP=$PUBLIC_ADDRESS"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
     echo "SPARK_MASTER_HOST=$LOCAL_ADDRESS"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
+    echo "SPARK_LOCAL_HOSTNAME=$PUBLIC_ADDRESS"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
+
+    # port setting
     echo "SPARK_MASTER_PORT=$SPARK_MASTER_PORT"  >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
 
+    # start spark in foregorund
+    echo "SPARK_NO_DAEMONIZE" >> /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/spark-env.sh
+    
     export SPARK_CONF_DIR=/opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf
 
     echo "starting Apache Spark Master!"
     /opt/spark-$SPARK_VERSION-bin-hadoop2.7/sbin/start-master.sh --webui-port ${SPARK_MASTER_UI_PORT}
 
     # whatever blocking call 
-    tail -f /dev/null
+    #tail -f /dev/null
 }
 
 function metric_agent_service(){
