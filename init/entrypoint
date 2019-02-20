@@ -32,7 +32,7 @@ function validate(){
 function writeConfigOptions(){
     echo "write config options"
     export SPARK_MASTER_PORT=$SPARK_MASTER_PORT
-    export SPARK_MASTER_UI_PORT = $SPARK_MASTER_UI_PORT
+    export SPARK_MASTER_UI_PORT=$SPARK_MASTER_UI_PORT
     export JMS_IP=$JMS_IP
     export JMS_PORT=$JMS_PORT
     export APP_NAME=$APP_NAME
