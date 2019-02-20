@@ -92,7 +92,7 @@ function spark_master_service(){
     /opt/spark-$SPARK_VERSION-bin-hadoop2.7/sbin/start-master.sh --webui-port ${SPARK_MASTER_UI_PORT}
 
     # whatever blocking call 
-    #tail -f /dev/null
+    tail -f /dev/null
 }
 
 function metric_agent_service(){
