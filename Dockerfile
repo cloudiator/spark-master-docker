@@ -20,6 +20,9 @@ ADD init /opt/docker-init
 RUN chmod +x  /opt/docker-init/entrypoint
 ADD conf /opt/docker-conf
 
+# set Python3 as default
+RUN rm  /usr/bin/python
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 
 # apache spark
